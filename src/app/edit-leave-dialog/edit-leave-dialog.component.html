@@ -1,0 +1,33 @@
+<h1 mat-dialog-title>For updating leave</h1>
+<div mat-dialog-content>
+  <form name="form"   (ngSubmit)='editLeave()'novalidate>
+  
+      <mat-form-field>
+  <input name="startFroms" #startFroms="ngModel" matInput [matDatepicker]="startFrom" placeholder="start From" [(ngModel)]="data.startFrom" required>
+  <mat-datepicker-toggle matSuffix [for]="startFrom"></mat-datepicker-toggle>
+  <mat-datepicker #startFrom></mat-datepicker>
+</mat-form-field>
+<div *ngIf="startFroms.invalid && (startFroms.dirty || startFroms.touched)">
+	<mat-error *ngIf="startFroms.errors.required">Please Provide Start From</mat-error></div><br>
+      
+
+<mat-form-field>
+  <input name="endTos" #endTos="ngModel" matInput [matDatepicker]="endTo" placeholder="end To" [(ngModel)]="data.endTo" required >
+  <mat-datepicker-toggle matSuffix [for]="endTo"></mat-datepicker-toggle>
+  <mat-datepicker #endTo required></mat-datepicker>
+</mat-form-field>
+<div *ngIf="endTos.invalid && (endTos.dirty || endTos.touched)">
+	<mat-error *ngIf="endTos.errors.required">Please Provide End To</mat-error></div><br>
+      
+      <mat-form-field>
+    <input id="reason" name="reason" matInput placeholder="Reason" [(ngModel)]="data.reason" #reason="ngModel"  required >
+  </mat-form-field>
+  <div *ngIf="reason.invalid && (reason.dirty || reason.touched)">
+	<mat-error *ngIf="reason.errors.required">Please Provide Reason</mat-error></div><br>
+      </form>
+</div>
+<div mat-dialog-actions>
+  <button mat-button color="primary"  (click)="editLeave()">Edit</button>
+  <button mat-button color="warning"  (click)="deleteLeave()" >Delete</button>
+  <button mat-button  color="danger" (click)="onNoClick()" cdkFocusInitial>Cancel</button>
+</div>

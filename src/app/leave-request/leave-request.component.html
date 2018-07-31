@@ -1,0 +1,242 @@
+
+
+
+<mat-card>
+  <mat-card-content>
+    <h2 class="example-h2">Leaves</h2>
+    <mat-tab-group class="demo-tab-group">
+    <mat-tab label="My Leave Requests">
+        
+          
+          
+          <div>
+
+  <mat-table [dataSource]="matmyLeaveRequest" matSort>
+
+    
+    <ng-container matColumnDef="startFrom">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Start Date </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.startFrom | date: 'dd-MMM-yyyy'}} </mat-cell>
+    </ng-container>
+
+    
+    <ng-container matColumnDef="endTo">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> End Date </mat-header-cell>
+      <mat-cell *matCellDef="let row"> <b>{{row.endTo | date: 'dd-MMM-yyyy'}}</b></mat-cell>
+    </ng-container>
+
+
+
+    <ng-container matColumnDef="leaveStatus">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Leave Status </mat-header-cell>
+      
+      <mat-cell *matCellDef="let row"> 
+    {{row.leaveStatus}}
+      </mat-cell>
+    </ng-container>
+    
+    
+    <ng-container matColumnDef="leaveId">
+      <mat-header-cell *matHeaderCellDef> Update </mat-header-cell>
+      
+      <mat-cell *matCellDef="let row"> 
+      
+      <button mat-raised-button color="primary"  (click)="openeditDialog(row)">Edit</button> 
+      
+      
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="myLeaveRequestdisplayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: myLeaveRequestdisplayedColumns">
+    
+    
+    
+    </mat-row>
+  </mat-table>
+
+  <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+</div>
+          
+          
+          
+        
+      
+      </mat-tab>
+      
+      <mat-tab label="Add Leave Request">
+       <div class ="container">
+  <div class="col-md-6 col-md-offset-4">
+  <br>
+<h4>Leave Request</h4>
+  <form name="form"   #leaveForm="ngForm">
+  
+      <mat-form-field>
+  <input name="startFroms" #startFroms="ngModel" matInput [matDatepicker]="startFrom" placeholder="start From" [(ngModel)]="newLeave.startFrom" required>
+  <mat-datepicker-toggle matSuffix [for]="startFrom"></mat-datepicker-toggle>
+  <mat-datepicker #startFrom></mat-datepicker>
+</mat-form-field>
+<div *ngIf="startFroms.invalid && (startFroms.dirty || startFroms.touched)">
+	<mat-error *ngIf="startFroms.errors.required">Please Provide Start From</mat-error></div><br>
+      
+
+<mat-form-field>
+  <input name="endTos" #endTos="ngModel" matInput [matDatepicker]="endTo" placeholder="end To" [(ngModel)]="newLeave.endTo" required>
+  <mat-datepicker-toggle matSuffix [for]="endTo"></mat-datepicker-toggle>
+  <mat-datepicker #endTo required></mat-datepicker>
+</mat-form-field>
+<div *ngIf="endTos.invalid && (endTos.dirty || endTos.touched)">
+	<mat-error *ngIf="endTos.errors.required">Please Provide End To</mat-error></div><br>
+      
+      <mat-form-field>
+    <input id="reason" name="reason" matInput placeholder="Reason" [(ngModel)]="newLeave.reason" #reason="ngModel"  required >
+  </mat-form-field>
+  <div *ngIf="reason.invalid && (reason.dirty || reason.touched)">
+	<mat-error *ngIf="reason.errors.required">Please Provide Reason</mat-error></div><br>
+      
+      
+     
+      
+      
+      </form>
+       <div class="button-row">
+	
+	<button mat-raised-button [disabled]="!leaveForm.form.valid" (click)="addLeave()" color="primary" >Submit</button>
+	<button  mat-raised-button (click)="resetLeave()" color="primary">Cancel</button>
+	</div>
+	</div>
+	
+	</div> 
+	<br>
+      </mat-tab>
+      
+      <mat-tab label="Show Leaves Requests">
+        
+       
+       
+         
+          <div >
+
+  <mat-table #table2 [dataSource]="matapprovalLeaveRequest" matSort>
+
+    <!-- first name Column -->
+    <ng-container matColumnDef="startFrom">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Start Date </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.startFrom | date: 'dd-MMM-yyyy'}} </mat-cell>
+    </ng-container>
+
+    <!-- Progress Column -->
+    <ng-container matColumnDef="endTo">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> End Date </mat-header-cell>
+      <mat-cell *matCellDef="let row"> <b>{{row.endTo | date: 'dd-MMM-yyyy'}}</b></mat-cell>
+    </ng-container>
+
+
+    <!-- Color Column -->
+    <ng-container matColumnDef="leaveStatus">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Leave Status </mat-header-cell>
+      
+      <mat-cell *matCellDef="let row"> 
+    {{row.leaveStatus}}
+      </mat-cell>
+    </ng-container>
+    
+    <!-- user name Column -->
+    <ng-container matColumnDef="user.userName">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> User Name </mat-header-cell>
+      
+      <mat-cell *matCellDef="let row"> 
+    {{row.user.userName}}
+      </mat-cell>
+    </ng-container>
+    
+    
+    
+    <ng-container matColumnDef="leaveId">
+      <mat-header-cell *matHeaderCellDef> Leave Status </mat-header-cell>
+      
+      <mat-cell *matCellDef="let row"> 
+      
+      <button mat-raised-button color="primary"  (click)="openapprovalDialog(row)">Edit</button> 
+      
+      
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="matapprovalLeaveRequestdisplayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: matapprovalLeaveRequestdisplayedColumns">
+    
+    
+    
+    </mat-row>
+  </mat-table>
+
+  <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+</div>
+          
+       
+       
+       
+      </mat-tab>
+      
+      <mat-tab label="Team Leaves Request">
+        
+       
+       
+       
+         
+          <div >
+
+  <mat-table #table3 [dataSource]="matteamLeaveRequest" matSort>
+
+    <!-- first name Column -->
+    <ng-container matColumnDef="startFrom">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Start Date </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.startFrom | date: 'dd-MMM-yyyy'}} </mat-cell>
+    </ng-container>
+
+    <!-- Progress Column -->
+    <ng-container matColumnDef="endTo">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> End Date </mat-header-cell>
+      <mat-cell *matCellDef="let row"> <b>{{row.endTo | date: 'dd-MMM-yyyy'}}</b></mat-cell>
+    </ng-container>
+
+
+    <!-- Color Column -->
+    <ng-container matColumnDef="leaveStatus">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Leave Status </mat-header-cell>
+      
+      <mat-cell *matCellDef="let row"> 
+    {{row.leaveStatus}}
+      </mat-cell>
+    </ng-container>
+    
+    <!-- user name Column -->
+    <ng-container matColumnDef="user.userName">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> User Name </mat-header-cell>
+      
+      <mat-cell *matCellDef="let row"> 
+    {{row.user.userName}}
+      </mat-cell>
+    </ng-container>
+    
+    
+   
+
+    <mat-header-row *matHeaderRowDef="matteamLeaveRequestdisplayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: matteamLeaveRequestdisplayedColumns">
+    
+    
+    
+    </mat-row>
+  </mat-table>
+
+  <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+</div>
+        
+       
+       
+      </mat-tab>
+    </mat-tab-group>
+  </mat-card-content>
+</mat-card>

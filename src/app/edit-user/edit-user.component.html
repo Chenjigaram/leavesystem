@@ -1,0 +1,59 @@
+
+<div class="example-container">
+<h2>Register</h2>
+<form name="form"   (ngSubmit)='update()'novalidate>
+  <mat-form-field>
+    <input id="empId" name="empId" matInput placeholder="Employee Number" [(ngModel)]="user.empId" #empId="ngModel" pattern="[0-9]*" required >
+  </mat-form-field>
+  <div *ngIf="empId.invalid && (empId.dirty || empId.touched)">
+	<mat-error *ngIf="empId.errors.required">Please Provide Employee Number</mat-error>
+	<mat-error *ngIf="empId.errors.pattern">Employee Id should Contain only Numbers</mat-error>
+	</div><br>
+	
+	<button mat-raised-button (ngClick)=" getUser(user.empId)" color="primary">Get Details</button>
+	
+	<mat-form-field>
+    <input id="userName" name="userName" matInput placeholder="User Name" [(ngModel)]="user.userName" #userName="ngModel"  required >
+  </mat-form-field>
+  <div *ngIf="userName.invalid && (userName.dirty || userName.touched)">
+	<mat-error *ngIf="userName.errors.required">Please Provide User Name</mat-error></div><br>
+	<mat-form-field>
+    <input id="firstName" name="firstName" matInput placeholder="First Name" [(ngModel)]="user.firstName" #firstName="ngModel"  required >
+  </mat-form-field>
+  <div *ngIf="firstName.invalid && (firstName.dirty || firstName.touched)">
+	<mat-error *ngIf="firstName.errors.required">Please Provide First Name</mat-error></div><br>
+	<mat-form-field>
+    <input id="lastName" name="lastName" matInput placeholder="Last Name" [(ngModel)]="user.lastName" #lastName="ngModel"   >
+  </mat-form-field><br>
+	<mat-form-field>
+    <input id="password" name="password" type="password" matInput placeholder="Password" [(ngModel)]="user.password" #password="ngModel"  required >
+  </mat-form-field>
+  <div *ngIf="password.invalid && (password.dirty || password.touched)">
+	<mat-error *ngIf="password.errors.required">Please Provide Password</mat-error></div><br>
+	
+	<mat-form-field>
+  <mat-select id="roles" name="roles" placeholder="Roles" [(ngModel)]="user.role" #roles="ngModel"  required>
+    <mat-option *ngFor="let role of allRoles" [value]="role">{{role.roleName}}</mat-option>
+  </mat-select>
+</mat-form-field>
+<div *ngIf="roles.invalid && (roles.dirty || roles.touched)">
+	<mat-error *ngIf="roles.errors.required">Please Select Role</mat-error></div><br>
+	
+	<mat-form-field>
+  <mat-select id="teams" name="teams" placeholder="Teams" [(ngModel)]="user.teams" #teams="ngModel" multiple required>
+    <mat-option *ngFor="let team of allTeams" [value]="team">{{team.teamName}}</mat-option>
+  </mat-select>
+</mat-form-field>
+<div *ngIf="teams.invalid && (teams.dirty || teams.touched)">
+	<mat-error *ngIf="teams.errors.required">Please Select Team</mat-error></div><br>
+	
+	
+	<div class="button-row">
+	
+	<button mat-raised-button (ngClick)=" update()" color="primary">Update</button>
+	<a mat-raised-button color="primary" [routerLink] = "['/login']" >Cancel</a>
+	</div>
+	
+	</form>
+
+</div>
