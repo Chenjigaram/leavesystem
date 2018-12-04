@@ -28,5 +28,5 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 
 ## Docker build command
 
-docker build . -t chenjigaramnaveen/leave-system:latest
+docker build . -t chenjigaramnaveen/leave-system:latest . /n
 docker run --name aws-file -d -p 1994:80 chenjigaramnaveen/aws-upload:latest
